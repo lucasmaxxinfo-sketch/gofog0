@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 212 22% 8%;
+    --foreground: 210 20% 98%;
+    --card: 212 22% 10%;
+    --card-foreground: 210 20% 98%;
+    --popover: 212 22% 8%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 225 100% 65%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 212 20% 15%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 212 20% 15%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 230 100% 72%;
+    --accent-foreground: 212 22% 8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 212 20% 20%;
+    --input: 212 20% 20%;
+    --ring: 225 100% 65%;
+    --radius: 0.75rem;
+    --chart-1: 225 100% 65%;
+    --chart-2: 230 100% 72%;
+    --chart-3: 190 90% 50%;
+    --chart-4: 260 80% 60%;
+    --chart-5: 340 80% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background-image: 
+      radial-gradient(circle at 50% 0%, hsla(225, 100%, 65%, 0.1) 0%, transparent 50%),
+      linear-gradient(to bottom, transparent, hsla(212, 22%, 8%, 0.5));
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline tracking-tight;
+  }
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, hsl(var(--primary)), transparent);
+  animation: scan 3s linear infinite;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+.blueprint-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, hsla(225, 100%, 65%, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, hsla(225, 100%, 65%, 0.05) 1px, transparent 1px);
+}
