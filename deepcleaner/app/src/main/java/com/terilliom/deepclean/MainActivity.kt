@@ -27,6 +27,12 @@ class MainActivity : Activity() {
     private val executor = Executors.newSingleThreadExecutor()
     private val findings = mutableListOf<Finding>()
     private val prefs by lazy { getSharedPreferences("review", MODE_PRIVATE) }
+    private val mediaPermissions: Array<String> get() = if (android.os.Build.VERSION.SDK_INT >= 33) arrayOf(
+        android.Manifest.permission.READ_MEDIA_IMAGES,
+        android.Manifest.permission.READ_MEDIA_VIDEO,
+        android.Manifest.permission.READ_MEDIA_AUDIO
+    ) else arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val scanRequestCode = 4107
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +63,28 @@ class MainActivity : Activity() {
     }
 
     private fun startScan() {
+        val missing = mediaPermissions.filter { checkSelfPermission(it) != android.content.pm.PackageManager.PERMISSION_GRANTED }
+        if (missing.isNotEmpty()) {
+            requestPermissions(missing.toTypedArray(), scanRequestCode)
+            status.text = "Allow media access to include shared photos, videos and audio in the scan."
+            return
+        }
+        runScan()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == scanRequestCode) {
+            if (mediaPermissions.all { checkSelfPermission(it) == android.content.pm.PackageManager.PERMISSION_GRANTED }) {
+                runScan()
+            } else {
+                status.text = "Media access was not granted. App analysis can still run, but shared-file scanning will be limited."
+                runScan()
+            }
+        }
+    }
+
+    private fun runScan() {
         status.text = "Scanning installed apps, usage signals and accessible storage…"
         results.removeAllViews()
         executor.execute {
