@@ -1,0 +1,8 @@
+{
+  "appId": "com.lucasmaxxinfo.fileintelligence",
+  "appName": "File Intelligence Agent",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
