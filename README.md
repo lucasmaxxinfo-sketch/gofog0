@@ -4,6 +4,7 @@ Approval-first file organiser. Free and open source.
 
 ## Features
 - Select local files, sort into proposed folders, identify exact duplicates and export an organised ZIP copy.
+- Run optional on-device image classification with the free Transformers.js MobileNet model. It produces general object labels, not guaranteed product identification.
 - Connect more than one Google Drive account in a browser session after configuring a Google OAuth Web Client ID.
 - Scan Drive metadata and prepare a proposed move/rename plan. Only checked items are changed after explicit approval.
 - Review duplicates separately. The app does not delete files.
@@ -19,4 +20,4 @@ Drive operations run directly between the browser and Google. Drive approval app
 Open Actions, select Build Android APK, open a successful run and download the file-intelligence-agent-debug-apk artifact. Extract app-debug.apk to install. This is a debug build, not a Play Store release. Android file access is limited by system permissions, and Google sign-in is intended for the HTTPS browser version.
 
 ## Limitations
-The project does not have unrestricted access to the entire Android phone. Drive analysis currently uses file metadata and exact checksums. It does not yet semantically recognise image contents or read every document's contents. Google OAuth configuration is required and cannot be bypassed.
+The project does not have unrestricted access to the entire Android phone. Drive analysis currently uses file metadata and exact checksums. Image classification is available for local selected images, but it may not identify specific collectible brands or characters. The app does not yet read every PDF, spreadsheet, or document's contents. Google OAuth configuration is required and cannot be bypassed.
