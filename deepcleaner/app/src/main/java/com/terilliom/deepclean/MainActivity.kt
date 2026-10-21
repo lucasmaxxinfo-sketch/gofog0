@@ -98,8 +98,18 @@ class MainActivity : Activity() {
 
             if (!usageAllowed) found.add(Finding("App activity access is not enabled", "Without Usage Access, DeepClean cannot reliably rank apps by recent activity. Tap the Usage Access button and enable DeepClean, then scan again.", "Analysis incomplete"))
 
+            // Android may return one UsageStats row per day. Aggregate rows by package,
+            // rather than accidentally keeping only the final day's activity.
             val usageMap = if (usageAllowed) try {
-                (getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager).queryUsageStats(UsageStatsManager.INTERVAL_DAILY, now - 7L*24*60*60*1000, now).associateBy { it.packageName }
+                (getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager)
+                    .queryUsageStats(UsageStatsManager.INTERVAL_DAILY, now - 7L*24*60*60*1000, now)
+                    .groupBy { it.packageName }
+                    .mapValues { (_, rows) ->
+                        object {
+                            val lastTimeUsed = rows.maxOfOrNull { it.lastTimeUsed } ?: 0L
+                            val totalTimeInForeground = rows.sumOf { it.totalTimeInForeground }
+                        }
+                    }
             } catch (_: Exception) { emptyMap() } else emptyMap()
 
             try {
@@ -163,7 +173,8 @@ class MainActivity : Activity() {
             card.addView(TextView(this).apply { text = "ASSESSMENT: ${item.impact}"; textSize = 12f; setTextColor(0xFF475569.toInt()) })
             if (item.action != null) {
                 val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.END }
-                val reject = Button(this).apply { text = "Dismiss"; setOnClickListener { card.visibility = android.view.View.GONE; prefs.edit().putBoolean("dismiss_$index", true).apply() } }
+                val stableKey = "dismiss_" + (item.title + "|" + item.detail).hashCode()
+                val reject = Button(this).apply { text = "Dismiss"; setOnClickListener { card.visibility = android.view.View.GONE; prefs.edit().putBoolean(stableKey, true).apply() } }
                 val review = Button(this).apply { text = "Review"; setOnClickListener { item.action.invoke() } }
                 row.addView(reject); row.addView(review); card.addView(row)
             }
