@@ -1,26 +1,22 @@
 # File Intelligence Agent
 
-A free, browser-based file organiser. Choose files, review an explicit proposed plan, then export an organised copy. Originals are never changed by this version.
+Approval-first file organiser. Free and open source.
 
-## Working features
-- Select multiple local files from a device.
-- Categorise common images, PDFs, documents, spreadsheets, presentations, audio, video, archives and other files.
-- Show image thumbnails and file metadata.
-- Compare files using SHA-256 content hashes and flag exact duplicates when browser hashing is available.
-- Prepare a proposed folder plan, choose a folder style and include/exclude each item.
-- Download an organised ZIP copy with a CSV plan.
-- Download the plan and activity log as CSV.
-- Review duplicate candidates separately. No deletion function is implemented.
-- Keep file contents in the browser; the app does not upload them to a server.
+## Features
+- Select local files, sort into proposed folders, identify exact duplicates and export an organised ZIP copy.
+- Connect more than one Google Drive account in a browser session after configuring a Google OAuth Web Client ID.
+- Scan Drive metadata and prepare a proposed move/rename plan. Only checked items are changed after explicit approval.
+- Review duplicates separately. The app does not delete files.
+- Download CSV plans and activity logs.
+- GitHub Actions can build an Android debug APK.
 
-## Safety
-Approving the plan creates a downloaded copy. It does not move, rename, overwrite or delete originals. Similar filenames are not treated as proof of duplicates. The Google Drive label field is only a local note, not an account connection. Never enter Google passwords or access tokens into this app.
+## Google Drive setup
+Create a project in Google Cloud Console, enable Google Drive API, configure the OAuth consent screen, and create a Web application OAuth Client ID. Add the app's exact HTTPS origin to Authorised JavaScript origins. Paste that Client ID into the app and connect accounts individually. Never enter a Google password or client secret into the app. Google may display an unverified-app warning until the OAuth project is configured and verified.
 
-## Free technology
-Plain HTML, CSS and browser JavaScript, with no framework or paid runtime. JSZip (MIT licence) is loaded from cdnjs only when ZIP export is requested. GitHub stores the source. The public repository can be published through GitHub Pages at no charge, subject to enabling Pages in repository settings.
+Drive operations run directly between the browser and Google. Drive approval applies the selected moves/renames. No deletion function exists. If an operation fails partway through, some earlier changes may already have been applied. Check Drive before retrying.
+
+## Android APK
+Open Actions, select Build Android APK, open a successful run and download the file-intelligence-agent-debug-apk artifact. Extract app-debug.apk to install. This is a debug build, not a Play Store release. Android file access is limited by system permissions, and Google sign-in is intended for the HTTPS browser version.
 
 ## Limitations
-This is a functional local-file MVP, not yet a native Android app. Browser selection does not grant whole-phone storage access. Google Drive OAuth, scanning multiple accounts, cloud file operations, visual image recognition, and native Android permissions are not connected yet. These require additional development and authorised configuration. The app does not claim otherwise.
-
-## Run
-Open `index.html` in a modern browser. HTTPS or localhost gives the best compatibility. Internet access is needed only to load JSZip at export time.
+The project does not have unrestricted access to the entire Android phone. Drive analysis currently uses file metadata and exact checksums. It does not yet semantically recognise image contents or read every document's contents. Google OAuth configuration is required and cannot be bypassed.
