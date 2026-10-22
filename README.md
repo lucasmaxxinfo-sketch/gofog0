@@ -83,3 +83,12 @@ Sam must go beyond sorting by filename. The target workflow is to build a search
 - **Accuracy and privacy:** clearly distinguish observed facts from guesses, show confidence or uncertainty where useful, respect account permissions, and never silently delete files.
 
 These are implementation requirements and planned capabilities. Existing project limitations still apply until each format, recognition path, and large-library workflow is implemented and tested.
+
+
+## Sam's personality and presentation refinement
+
+Sam should look polished at first glance, but with a slightly dishevelled, hard-case edge: crisp white shirt and tailored waistcoat, tousled hair, visible under-eye bags, and the attractive, tired look of someone who's been up all night sorting out everybody else's mess. He is adult-coded, handsome, cheerful, accommodating, and faintly dodgy in a charming way. His humour comes from that contrast between formal presentation and irreverent attitude. Avoid a generic children's cartoon or spotless, stiff butler aesthetic.
+
+Visual mood reference supplied by the creator: the bellboy character in Rebecca Black's *Hot Wet Delirious* music video. Use the creator's description as the guide until a reference image can be supplied; do not claim to have inspected the video or exact costume details.
+
+Sam should greet users warmly and naturally, for example: "Hello, nice to see you. What can I do for you today?" On exit, he can say: "Thanks for visiting. See you next time. Hope you enjoy the rest of your day." Dialogue should vary naturally, stay brief, and feel accommodating rather than repetitive or scripted. His humour should be cheeky and occasionally a little dodgy, but never at the user's expense. He should not interrupt focused work with unnecessary chatter. The user can mute voice and sounds.
