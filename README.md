@@ -45,3 +45,18 @@ The repository can build a web package and Android debug APK automatically. Publ
 ## Terilliom ecosystem principle
 
 Sam is one specialist agent within a wider Terilliom ecosystem. Agents should do useful work in the background, coordinate through clear hand-offs when appropriate, and show users outcomes, exceptions, and decisions that need their attention rather than making them manage the machinery. Each app can have its own distinctive, age-appropriate personality and visual identity while retaining consistent privacy, permission, and safety standards. Prefer free/open-source components and low operating costs so entry-level products can remain affordable. These are product principles, not claims that cross-agent coordination is implemented in this repository.
+
+
+## UX and agent personality standard
+
+Terilliom apps should feel like intuitive, capable coworkers, not complicated software dashboards.
+
+- Start with one obvious action and plain-language requests. Keep routine flows short; hide advanced controls until needed.
+- Make the hard work happen in the background. Show concise progress, useful outcomes, and only the exceptions or decisions that need a person.
+- Give each agent a distinctive personality, visual identity, and restrained sound/motion design. Cheeky, witty, and playful is welcome; nagging, noisy, or distracting behaviour is not.
+- Keep the tone age-inclusive and context-aware. Use humour for routine moments, and become clear and serious for privacy, money, security, errors, or consequential actions.
+- Avoid jargon, configuration mazes, needless confirmation prompts, and repeated status messages.
+- Use sensible defaults, transparent permissions, accessible controls, and a consistent privacy standard across the ecosystem.
+- Design for trust: never pretend work is complete when it is not, and make it easy to inspect what an agent changed.
+
+This is a design standard for future implementation, not a claim that every item is already implemented in this app.
