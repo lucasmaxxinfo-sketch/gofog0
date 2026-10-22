@@ -31,6 +31,29 @@ body:not(.show-library) #drivePanel{display:none!important}
 .onboard-shade{position:fixed;inset:0;z-index:9999;background:#050915dd;backdrop-filter:blur(12px);display:grid;place-items:center;padding:16px}
 .onboard-card{width:min(100%,520px);max-height:92dvh;overflow:auto;background:linear-gradient(155deg,#222b52,#111a30);border:1px solid #7379b5;border-radius:24px;padding:24px;box-shadow:0 25px 90px #0009}
 .onboard-card h2{font-size:26px;line-height:1.15;margin:8px 0 10px}.onboard-card p{color:var(--muted)}.onboard-step{display:flex;gap:9px;align-items:center;margin:18px 0 8px}.onboard-step b{display:grid;place-items:center;min-width:30px;height:30px;border-radius:50%;background:#9fffe5;color:#11152a}.onboard-card .field{margin:7px 0 12px}.onboard-card .row>*{flex:1}.onboard-card .onboard-actions{margin-top:18px}.onboard-card .onboard-small{font-size:12px;color:var(--muted)}
+
+/* Sam experience polish: character-led, playful, tactile */
+:root{--accent:#a9fff0;--blue:#b8a0ff}
+body{background:radial-gradient(ellipse at 50% 8%,#33205d 0,#11152c 48%,#070914 100%);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}
+.brand .logo{background:linear-gradient(135deg,#ffb56b,#ff6e9f 45%,#a88aff);color:#17122b;box-shadow:0 0 28px #ff8cbb55}
+.eyebrow{color:#ffc58b;letter-spacing:.18em}
+.librarian{border:1px solid #8d78d7;background:radial-gradient(ellipse at 50% 24%,#38215f 0,rgba(19,24,52,.97) 48%,#0c1022 100%);box-shadow:0 24px 80px #0008,0 0 60px #a16aff24}
+.librarian h2{letter-spacing:-.035em;text-shadow:0 0 25px #b18cff35}
+.portal{width:128px;height:128px;background:radial-gradient(circle at 35% 28%,#fffbe1 0,#ffe18a 10%,#ff8b54 26%,#ec4f9b 43%,#865bff 60%,#242d86 72%,#10142e 77%);box-shadow:0 0 0 8px #8cdcff10,0 0 36px #ff8c726e,0 0 100px #9467ff75,inset 0 0 24px #fff8d966}
+.portal:before{inset:-17px;border-width:2px;border-style:solid}
+.portal:after{inset:-27px;border-width:1px}
+button{transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;border-radius:15px}
+button:hover{filter:brightness(1.15);box-shadow:0 0 22px #a68bff26}
+button:active{transform:scale(.94) rotate(-.5deg)}
+button.primary,.askrow button.primary{background:linear-gradient(110deg,#9fffe5,#a6a6ff 55%,#ffb0d5);color:#15132c;border:0;box-shadow:0 5px 24px #a58cff35}
+.onboard-shade{background:radial-gradient(ellipse at 50% 40%,#33205dcc,#050711f5);backdrop-filter:blur(18px)}
+.onboard-card{border-radius:30px;border-color:#a28bff;background:radial-gradient(ellipse at 50% 0,#422466,#171b39 62%,#0e1226);box-shadow:0 25px 100px #000b,0 0 55px #9768ff28}
+.onboard-card h2{font-size:clamp(27px,7vw,36px);letter-spacing:-.04em}
+.onboard-step b{background:linear-gradient(135deg,#ffca87,#ff8dc4);box-shadow:0 0 16px #ff8dc455}
+@keyframes samFloat{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.portal{animation:corePulse 3s ease-in-out infinite,samFloat 4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.portal{animation:none!important}button{transition:none}}
+
 </style></head><body><main class="wrap">
 <header class="top"><div class="brand"><div class="logo">⌘</div><div><div class="eyebrow">Personal file operations</div><h1>File Intelligence Agent</h1></div></div><span class="tag">Approval-first · Local processing</span></header>
 <section class="hero librarian">
@@ -62,19 +85,18 @@ body:not(.show-library) #drivePanel{display:none!important}
 </div>
 <div id="onboardShade" class="onboard-shade hidden" role="dialog" aria-modal="true" aria-labelledby="onboardTitle">
  <section class="onboard-card">
-  <div class="eyebrow">Quick setup · 2 steps</div>
-  <h2 id="onboardTitle">Let’s connect your Google Drives.</h2>
-  <p>Sam can search across several Google accounts in one place. You choose each account in Google’s own sign-in window, and can skip any account you don’t want to connect.</p>
+  <div class="eyebrow">Sam · your file-finding sidekick</div>
+  <h2 id="onboardTitle">Let’s get your universe connected ✨</h2>
+  <p>Pick how many Google accounts you want Sam to search. One at a time, with Google handling sign-in securely.</p>
   <div class="onboard-step"><b>1</b><strong>How many Google accounts do you want to connect?</strong></div>
   <select id="onboardCount" class="field" aria-label="Number of Google accounts to connect">
    <option value="1">1 Google account</option><option value="2">2 Google accounts</option><option value="3">3 Google accounts</option><option value="4">4 Google accounts</option><option value="5">5 Google accounts</option><option value="6">6 Google accounts</option><option value="7">7 Google accounts</option><option value="8">8 Google accounts</option><option value="9">9 Google accounts</option><option value="10">10 Google accounts</option>
   </select>
-  <div class="onboard-step"><b>2</b><strong>Connect them one at a time</strong></div>
-  <p class="onboard-small">A one-time Google OAuth Web Client ID is required before Google sign-in can work. If it’s already set up, it will be filled in below. Don’t enter your Google password here.</p>
-  <label for="onboardClientId">Google OAuth Web Client ID</label>
-  <input id="onboardClientId" class="field" placeholder="Ends in .apps.googleusercontent.com" autocomplete="off">
+  <div class="onboard-step"><b>2</b><strong>Sam will guide you through each account</strong></div>
+  <p class="onboard-small">Your password stays with Google. Sam never needs to see it.</p>
+  <label for="onboardClientId" class="hidden">Connection setup</label><input id="onboardClientId" class="field hidden" aria-hidden="true" tabindex="-1" autocomplete="off">
   <div id="onboardStatus" class="notice">0 accounts connected. Choose how many you want, then connect the first account.</div>
-  <div class="row onboard-actions"><button id="onboardConnect" class="primary" type="button">Connect next account</button><button id="onboardFinish" type="button">Finish later</button></div>
+  <div class="row onboard-actions"><button id="onboardConnect" class="primary" type="button">✨ Connect Google account</button><button id="onboardFinish" type="button">Not now</button></div>
   <p class="onboard-small">You can return to this setup any time from “Open library settings”. Connecting grants access only through Google’s consent screen. You can disconnect accounts in the app.</p>
  </section>
 </div>
@@ -147,5 +169,11 @@ const onboardOriginalRender=renderDriveAccounts;
 renderDriveAccounts=function(){onboardOriginalRender();if(onboardStatus){const n=driveAccounts.length;onboardStatus.className='notice';onboardStatus.textContent=n+' Google account(s) connected. '+(n<Number(onboardCount.value||1)?'Connect the next account, or finish setup.':'Your selected total is connected. You can increase the number to add more.');if(onboardClientId&&$('googleClientId'))onboardClientId.value=$('googleClientId').value}};
 $('libraryToggle').addEventListener('click',()=>{if(document.body.classList.contains('show-library'))openOnboarding()});
 if(!localStorage.getItem('fia-onboarding-seen'))openOnboarding();
+
+
+/* Soft UI sounds: Web Audio only after user interaction */
+let samAudio;
+function samChime(kind="tap"){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;samAudio=samAudio||new C();if(samAudio.state==="suspended")samAudio.resume();const now=samAudio.currentTime;const o=samAudio.createOscillator(),g=samAudio.createGain();o.connect(g);g.connect(samAudio.destination);o.type="sine";o.frequency.setValueAtTime(kind==="success"?660:kind==="whoosh"?280:520,now);o.frequency.exponentialRampToValueAtTime(kind==="success"?990:kind==="whoosh"?120:720,now+.12);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.045,now+.018);g.gain.exponentialRampToValueAtTime(.0001,now+.19);o.start(now);o.stop(now+.2)}catch{}}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(b&&!b.disabled){samChime(b.id==="onboardConnect"||b.id==="connectDriveBtn"?"success":b.id==="libraryToggle"?"whoosh":"tap")}},true);
 
 </script></body></html>
