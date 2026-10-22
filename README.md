@@ -101,3 +101,22 @@ Sam is explicitly an adult, around 21. His look should follow the bellboy outfit
 The character should feel adult, stylish, and knowingly playful, not juvenile or overly polished. His party-boy energy appears through expressions, movement, timing, and occasional dry jokes, not constant noise or interruptions. Preserve the greeting/farewell behaviour and sound controls already specified above.
 
 The exact costume details should be checked against a supplied screenshot or reference image before final visual implementation. Until then, this description is the approved direction, not a claim that the reference image has been inspected.
+
+## Sam-led interface and character direction
+
+Sam is the central character and guide through the entire app. The interface is his domain: he is the head librarian who organises the collection, proposes clear folder structures and filenames, finds files, and explains the work he has actually completed. He is the narrator and guide, not a decorative chatbot or one of several competing mascots.
+
+### Visual experience
+- Sam is the only character. Use the specific “Bellhop” character from Rebecca Black's *Hot Wet Delirious* video as the appearance reference; match the reference rather than inventing outfit details.
+- Adult character, approximately 21, with charming party-boy confidence, a formal bellhop presentation, and a slightly rumpled, tired-eyed, scruffy edge.
+- Sam rides a small hovercraft and can zip around the library.
+- Keep him present at the edge of the workspace while the user works. Give the actual files, folders and search results the space they need.
+- Short, purposeful animations: Sam scans a shelf or folder, circles while searching, papers swirl into a brief paper-tornado, then he returns with the matching files or a result. Use swish, hover and paper sounds sparingly, with mute and reduced-motion controls.
+- The visual style should feel polished, lively and adult, with a clear hierarchy and no clutter, pointless widgets, competing mascots, or excessive animation.
+
+### Behaviour and honesty
+- Sam speaks in a warm, formal, cheeky, capable voice. Keep narration brief and useful; offer typed messages if voice is unavailable, and allow voice to be disabled.
+- Sam explains what he found, what he changed, what needs approval and what remains unfinished.
+- Never animate or claim a task as complete unless the underlying operation really succeeded. Show honest progress and errors.
+- File moves and renames require explicit approval. Never silently delete files or duplicates. Never mark inventory as sold or remove it without a verified source and explicit authorisation.
+- The app should make complex file management feel effortless without hiding meaningful permissions or consequential actions.
