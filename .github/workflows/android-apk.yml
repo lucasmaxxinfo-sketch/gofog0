@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android APK and Web Package
 on:
   push:
     branches: [main]
@@ -6,6 +6,31 @@ on:
 permissions:
   contents: read
 jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate app
+        run: node scripts/check-html.cjs
+      - name: Package browser version
+        run: |
+          mkdir -p web-package
+          cp index.html manifest.webmanifest README.md web-package/
+          touch web-package/.nojekyll
+          cd web-package
+          zip -r ../file-intelligence-agent-web.zip .
+      - name: Publish web package
+        uses: actions/upload-artifact@v4
+        with:
+          name: file-intelligence-agent-web
+          path: file-intelligence-agent-web.zip
+          if-no-files-found: error
+          retention-days: 30
   build-apk:
     runs-on: ubuntu-latest
     steps:
