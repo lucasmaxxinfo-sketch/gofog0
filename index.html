@@ -26,6 +26,11 @@ body{background:radial-gradient(ellipse at 50% 0%,#25345b 0,#101426 52%,#080c16 
 .librarian-actions{justify-content:center;margin-top:18px}.librarian-actions button{background:#202b49}.librarian-actions .muted{font-size:12px}
 body:not(.show-library) #drivePanel{display:none!important}
 @media(max-width:560px){.wrap{padding:10px}.brand h1{font-size:18px}.librarian{min-height:calc(100dvh - 78px);padding:20px 14px}.askrow{flex-wrap:wrap}.askrow .field{flex-basis:100%}.askrow button{flex:1}#assistantResults{max-height:32vh}}
+
+/* First-run Google Drive onboarding */
+.onboard-shade{position:fixed;inset:0;z-index:9999;background:#050915dd;backdrop-filter:blur(12px);display:grid;place-items:center;padding:16px}
+.onboard-card{width:min(100%,520px);max-height:92dvh;overflow:auto;background:linear-gradient(155deg,#222b52,#111a30);border:1px solid #7379b5;border-radius:24px;padding:24px;box-shadow:0 25px 90px #0009}
+.onboard-card h2{font-size:26px;line-height:1.15;margin:8px 0 10px}.onboard-card p{color:var(--muted)}.onboard-step{display:flex;gap:9px;align-items:center;margin:18px 0 8px}.onboard-step b{display:grid;place-items:center;min-width:30px;height:30px;border-radius:50%;background:#9fffe5;color:#11152a}.onboard-card .field{margin:7px 0 12px}.onboard-card .row>*{flex:1}.onboard-card .onboard-actions{margin-top:18px}.onboard-card .onboard-small{font-size:12px;color:var(--muted)}
 </style></head><body><main class="wrap">
 <header class="top"><div class="brand"><div class="logo">⌘</div><div><div class="eyebrow">Personal file operations</div><h1>File Intelligence Agent</h1></div></div><span class="tag">Approval-first · Local processing</span></header>
 <section class="hero librarian">
@@ -54,7 +59,26 @@ body:not(.show-library) #drivePanel{display:none!important}
 <div class="row" style="margin-top:12px"><button id="drivePlanBtn" disabled>Prepare Drive plan</button><button class="primary" id="driveApplyBtn" disabled>Approve & apply selected changes</button><button id="driveUndoBtn" disabled>Undo last Drive batch</button><button id="driveDuplicateBtn" disabled>Review duplicates (no deletion)</button></div>
 <div id="drivePlan" style="margin-top:12px"><div class="empty">The proposed Drive plan will appear here.</div></div><div id="driveResult" aria-live="polite"></div>
 <p class="muted" style="font-size:12px">This app does not upload your files to a third-party server. Google Drive operations go directly from your browser to Google. Google may show an “unverified app” warning until the OAuth project is configured and verified. The app cannot bypass Google’s consent screen.</p></section><section class="panel span6"><h3>Safety & activity</h3><div class="notice">✓ No changes without approval<br>✓ Originals are never overwritten<br>✓ Deletion is separate and never automatic</div><div id="activity" class="list"><div class="empty">Activity will appear here.</div></div><button id="logBtn" style="margin-top:10px">Download activity log</button></section>
-</div><footer class="foot">File Intelligence Agent · Free, open-source starter · Your files stay in your browser until you choose a download.</footer></main>
+</div>
+<div id="onboardShade" class="onboard-shade hidden" role="dialog" aria-modal="true" aria-labelledby="onboardTitle">
+ <section class="onboard-card">
+  <div class="eyebrow">Quick setup · 2 steps</div>
+  <h2 id="onboardTitle">Let’s connect your Google Drives.</h2>
+  <p>Sam can search across several Google accounts in one place. You choose each account in Google’s own sign-in window, and can skip any account you don’t want to connect.</p>
+  <div class="onboard-step"><b>1</b><strong>How many Google accounts do you want to connect?</strong></div>
+  <select id="onboardCount" class="field" aria-label="Number of Google accounts to connect">
+   <option value="1">1 Google account</option><option value="2">2 Google accounts</option><option value="3">3 Google accounts</option><option value="4">4 Google accounts</option><option value="5">5 Google accounts</option><option value="6">6 Google accounts</option><option value="7">7 Google accounts</option><option value="8">8 Google accounts</option><option value="9">9 Google accounts</option><option value="10">10 Google accounts</option>
+  </select>
+  <div class="onboard-step"><b>2</b><strong>Connect them one at a time</strong></div>
+  <p class="onboard-small">A one-time Google OAuth Web Client ID is required before Google sign-in can work. If it’s already set up, it will be filled in below. Don’t enter your Google password here.</p>
+  <label for="onboardClientId">Google OAuth Web Client ID</label>
+  <input id="onboardClientId" class="field" placeholder="Ends in .apps.googleusercontent.com" autocomplete="off">
+  <div id="onboardStatus" class="notice">0 accounts connected. Choose how many you want, then connect the first account.</div>
+  <div class="row onboard-actions"><button id="onboardConnect" class="primary" type="button">Connect next account</button><button id="onboardFinish" type="button">Finish later</button></div>
+  <p class="onboard-small">You can return to this setup any time from “Open library settings”. Connecting grants access only through Google’s consent screen. You can disconnect accounts in the app.</p>
+ </section>
+</div>
+<footer class="foot">File Intelligence Agent · Free, open-source starter · Your files stay in your browser until you choose a download.</footer></main>
 <script>
 const $=id=>document.getElementById(id);let files=[],plan=[],log=[],deletedReview=false;const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function fmt(n){if(!n)return'0 B';let u=['B','KB','MB','GB'];let i=Math.min(Math.floor(Math.log(n)/Math.log(1024)),3);return(n/1024**i).toFixed(i?1:0)+' '+u[i]}function kind(f){let e=(f.name.split('.').pop()||'').toLowerCase(),m=f.type||'';if(m.startsWith('image/')||['jpg','jpeg','png','gif','webp','bmp','heic','svg','avif','tif','tiff'].includes(e))return'Images';if(m==='application/pdf'||e==='pdf')return'PDFs';if(['xls','xlsx','csv','ods'].includes(e)||m.includes('spreadsheet')||m==='text/csv')return'Spreadsheets';if(['doc','docx','odt','rtf','txt','md'].includes(e)||m.includes('word')||m.startsWith('text/'))return'Documents';if(['ppt','pptx','odp'].includes(e)||m.includes('presentation'))return'Presentations';if(['mp4','mov','avi','mkv','webm','3gp'].includes(e)||m.startsWith('video/'))return'Video';if(['mp3','wav','m4a','aac','ogg','flac'].includes(e)||m.startsWith('audio/'))return'Audio';if(['zip','rar','7z','tar','gz'].includes(e))return'Archives';return'Other'}function folder(f){let k=kind(f),style=$('style').value;if(style==='images')return k==='Images'?'Images':(['PDFs','Documents','Spreadsheets','Presentations'].includes(k)?'Documents':(['Video','Audio'].includes(k)?'Media':'Other'));if(style==='year'){let d=new Date(f.lastModified||Date.now()),y=Number.isFinite(d.getTime())?d.getFullYear():'Unknown year';return y+'/'+k}return k}let visionPipeline=null,visionBusy=false;
 async function recogniseImages(){if(visionBusy)return;let imgs=files.filter(x=>kind(x.file)==='Images'&&!x.vision);if(!imgs.length){$('visionStatus').textContent='No unlabelled images to analyse.';return}visionBusy=true;$('visionBtn').disabled=true;try{$('visionStatus').textContent='Loading the free image model. The first download may take a little while…';if(!visionPipeline){const mod=await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.2');mod.env.allowLocalModels=false;visionPipeline=await mod.pipeline('image-classification','Xenova/mobilenet_v2_1.0_224')}for(let i=0;i<imgs.length;i++){let x=imgs[i];$('visionStatus').textContent='Recognising image '+(i+1)+' of '+imgs.length+'…';let result=await visionPipeline(x.preview||URL.createObjectURL(x.file),{topk:3});x.vision=(result||[]).slice(0,3).map(r=>r.label+' ('+Math.round(r.score*100)+'%)').join(', ')}renderFiles();$('visionStatus').textContent='Image recognition finished for '+imgs.length+' image(s). Labels are suggestions, not guaranteed product identification.';note('Ran local image classification on '+imgs.length+' image(s)')}catch(e){$('visionStatus').textContent='Image recognition could not run: '+e.message+'. Check your internet connection and try again.'}finally{visionBusy=false;$('visionBtn').disabled=!files.some(x=>kind(x.file)==='Images'&&!x.vision)}}
@@ -109,4 +133,19 @@ const originalRenderDriveAccounts=renderDriveAccounts;
 renderDriveAccounts=function(){originalRenderDriveAccounts();$('librarySummary').textContent=driveAccounts.length+' account(s) connected · '+driveFiles.length+' file(s) in current scan'};
 
 renderLog();renderDriveAccounts();renderDriveFiles();
+
+/* First-run multi-account onboarding */
+const onboardShade=$('onboardShade'),onboardCount=$('onboardCount'),onboardClientId=$('onboardClientId'),onboardStatus=$('onboardStatus');
+let onboardTarget=1,onboardInitialCount=0;
+function openOnboarding(){onboardInitialCount=driveAccounts.length;onboardTarget=Number(onboardCount.value||1);onboardClientId.value=$('googleClientId').value||'';onboardStatus.textContent=driveAccounts.length+' account(s) already connected. Choose the total number you want connected.';onboardShade.classList.remove('hidden')}
+function closeOnboarding(){onboardShade.classList.add('hidden');localStorage.setItem('fia-onboarding-seen','1')}
+onboardCount.addEventListener('change',()=>{onboardTarget=Number(onboardCount.value||1);onboardStatus.textContent=driveAccounts.length+' of '+onboardTarget+' selected account(s) connected.'});
+onboardClientId.addEventListener('input',()=>{$('googleClientId').value=onboardClientId.value.trim()});
+$('onboardConnect').addEventListener('click',()=>{onboardTarget=Number(onboardCount.value||1);$('googleClientId').value=onboardClientId.value.trim();if(driveAccounts.length>=onboardTarget){onboardStatus.textContent='You have reached your selected total of '+onboardTarget+' account(s). Increase the number if you want to add more.';return}if(!$('googleClientId').value.trim()){onboardStatus.className='notice warn';onboardStatus.textContent='Enter your Google OAuth Web Client ID first. It ends in .apps.googleusercontent.com.';return}onboardStatus.className='notice';onboardStatus.textContent='Google sign-in will open. Choose the account you want to connect, then return here to add the next one.';$('connectDriveBtn').click()});
+$('onboardFinish').addEventListener('click',closeOnboarding);
+const onboardOriginalRender=renderDriveAccounts;
+renderDriveAccounts=function(){onboardOriginalRender();if(onboardStatus){const n=driveAccounts.length;onboardStatus.className='notice';onboardStatus.textContent=n+' Google account(s) connected. '+(n<Number(onboardCount.value||1)?'Connect the next account, or finish setup.':'Your selected total is connected. You can increase the number to add more.');if(onboardClientId&&$('googleClientId'))onboardClientId.value=$('googleClientId').value}};
+$('libraryToggle').addEventListener('click',()=>{if(document.body.classList.contains('show-library'))openOnboarding()});
+if(!localStorage.getItem('fia-onboarding-seen'))openOnboarding();
+
 </script></body></html>
