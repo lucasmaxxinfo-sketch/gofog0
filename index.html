@@ -80,14 +80,42 @@ button:active{transform:translateY(1px) scale(.99)}
 #assistantResults a.pill{background:linear-gradient(135deg,#354c66,#1a2a40);border-color:#8297ad}
 @media(prefers-reduced-motion:reduce){.sam-stage.sam-reveal:before,.sam-stage.sam-reveal:after,.sam-stage.sam-reveal .item,.sam-stage.sam-reveal .empty,.sam-voice:before{animation:none!important}button{transition:none}}
 
+
+/* Sam's floating robot and swirling file trails */
+.sam-flight{width:220px;height:190px;margin:0 auto 18px;position:relative;display:grid;place-items:center;perspective:700px;isolation:isolate}
+.sam-bot{width:102px;height:100px;position:relative;z-index:2;animation:botHover 2.8s ease-in-out infinite;filter:drop-shadow(0 13px 18px #08071688)}
+.bot-face{position:absolute;inset:17px 9px 14px;border-radius:32px 32px 27px 27px;background:linear-gradient(145deg,#f2f7ff,#b5c5db 22%,#566b91 49%,#222b51 76%,#11182f);border:2px solid #e3edff;box-shadow:inset 0 2px 5px #fff9,inset 0 -8px 14px #080e25,0 0 24px #8fa8ff77}
+.bot-face:before{content:"";position:absolute;left:11px;right:11px;top:10px;height:45px;border-radius:22px;background:linear-gradient(145deg,#141a35,#26285a);border:1px solid #8da4d7;box-shadow:inset 0 0 14px #796bff66}
+.bot-eye{position:absolute;top:25px;width:12px;height:17px;border-radius:50%;background:linear-gradient(#fff9c8,#75f7ff 65%,#6d78ff);box-shadow:0 0 12px #7df5ff;z-index:2}
+.bot-eye:first-child{left:27px}.bot-eye:nth-child(2){right:27px}
+.bot-mouth{position:absolute;z-index:2;bottom:17px;left:37px;width:18px;height:4px;border-radius:99px;background:#ffc4ec;box-shadow:0 0 8px #ff83dd}
+.bot-aerial{position:absolute;left:46px;top:0;width:10px;height:19px;border-radius:10px;background:linear-gradient(90deg,#657a9b,#e3edff,#536888)}
+.bot-aerial:after{content:"";position:absolute;top:-6px;left:-4px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#9ffff0 30%,#806dff 67%);box-shadow:0 0 17px #8cf7ff}
+.bot-glint{position:absolute;right:-6px;top:23px;color:#ffe4a1;text-shadow:0 0 12px #ffb4db;font-size:16px;animation:glintBlink 2s ease-in-out infinite}
+.flight-ring{position:absolute;inset:28px 8px;border:1px solid #a5c8ff88;border-radius:50%;transform:rotateX(68deg) rotateZ(-24deg);box-shadow:0 0 16px #7b8dff30}
+.flight-ring-b{inset:40px 0;border-color:#ffb7d977;transform:rotateX(66deg) rotateZ(37deg);animation:orbitSpin 8s linear infinite reverse}
+.paper-orbit{position:absolute;inset:0;z-index:1;animation:paperCyclone 5.5s linear infinite}
+.paper-orbit-b{animation-duration:7.5s;animation-direction:reverse;scale:.86}
+.paper-orbit i{position:absolute;width:23px;height:29px;display:grid;place-items:center;font-style:normal;font-size:16px;color:#1a2343;background:linear-gradient(135deg,#fff4cb,#b8d6ff);border:1px solid #fff9;border-radius:3px;box-shadow:0 3px 10px #05081777}
+.paper-orbit i:nth-child(1){left:8px;top:39px;rotate:-24deg}.paper-orbit i:nth-child(2){right:8px;top:65px;rotate:17deg}.paper-orbit i:nth-child(3){left:41px;bottom:8px;rotate:12deg}
+.paper-orbit-b i{background:linear-gradient(135deg,#ffe1f3,#d0c6ff);width:18px;height:24px}
+.paper-orbit-b i:nth-child(1){left:33px;top:8px;rotate:15deg}.paper-orbit-b i:nth-child(2){right:25px;bottom:9px;rotate:-22deg}.paper-orbit-b i:nth-child(3){right:3px;top:28px;rotate:31deg}
+@keyframes botHover{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-9px) rotate(2deg)}}
+@keyframes paperCyclone{from{transform:rotate(0) scale(.92)}50%{transform:rotate(180deg) scale(1.04)}to{transform:rotate(360deg) scale(.92)}}
+@keyframes glintBlink{0%,100%{opacity:.45;scale:.8}50%{opacity:1;scale:1.15}}
+@keyframes samFlyBurst{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--fly-x),var(--fly-y)) rotate(220deg);opacity:0}}
+.sam-flight.sam-flying .paper-orbit i{animation:samFlyBurst .75s cubic-bezier(.2,.7,.2,1) both}
+.sam-flight.sam-flying .paper-orbit i:nth-child(1){--fly-x:-90px;--fly-y:-75px}.sam-flight.sam-flying .paper-orbit i:nth-child(2){--fly-x:100px;--fly-y:-40px}.sam-flight.sam-flying .paper-orbit i:nth-child(3){--fly-x:-25px;--fly-y:90px}
+@media(max-width:560px){.sam-flight{width:190px;height:165px;scale:.94}.askrow #voiceToggle{flex:1}}
+@media(prefers-reduced-motion:reduce){.sam-bot,.paper-orbit,.flight-ring-b,.bot-glint{animation:none!important}}
 </style></head><body><main class="wrap">
 <header class="top"><div class="brand"><div class="logo">⌘</div><div><div class="eyebrow">Personal file operations</div><h1>File Intelligence Agent</h1></div></div><span class="tag">Approval-first · Local processing</span></header>
 <section class="hero librarian">
-<div class="portal" aria-hidden="true"><span>✦</span><i></i></div>
+<div class="sam-flight" aria-hidden="true"><div class="paper-orbit"><i>▤</i><i>▧</i><i>▤</i></div><div class="paper-orbit paper-orbit-b"><i>▧</i><i>▤</i><i>▧</i></div><div class="sam-bot"><div class="bot-aerial"></div><div class="bot-face"><span class="bot-eye"></span><span class="bot-eye"></span><span class="bot-mouth"></span></div><span class="bot-glint">✦</span></div><div class="flight-ring"></div><div class="flight-ring flight-ring-b"></div></div>
 <div class="eyebrow">SAM · YOUR FILE LIBRARIAN</div>
 <h2>Give me a mission.</h2>
 <p>Ask for a file. I’ll sweep the library, pull the right records, and bring the best matches straight to you.</p>
-<form id="askForm" class="askrow"><input id="askInput" class="field" autocomplete="off" placeholder="Try: photos of tennis shoes" aria-label="Ask your file librarian"><button class="primary" type="submit">Find files</button><button id="speakBtn" type="button" aria-label="Speak your request">🎙 Speak</button></form>
+<form id="askForm" class="askrow"><input id="askInput" class="field" autocomplete="off" placeholder="Try: photos of tennis shoes" aria-label="Ask your file librarian"><button class="primary" type="submit">Find files</button><button id="speakBtn" type="button" aria-label="Speak your request">🎙 Talk to Sam</button><button id="voiceToggle" type="button" aria-pressed="true" aria-label="Toggle Sam voice">🔊 Voice on</button></form>
 <div id="assistantStatus" class="notice">Connect and scan your Google Drives to build your searchable library.</div>
 <div id="assistantResults" class="list"><div class="empty">Your matching files will appear here.</div></div>
 <div class="row librarian-actions"><button id="libraryToggle" type="button">Open library settings</button><span class="muted" id="librarySummary">No drives scanned yet</span></div>
@@ -160,7 +188,11 @@ $('clearDriveBtn').onclick=()=>{driveAccounts=[];driveFiles=[];assistantFiles=[]
 
 if(window.Capacitor?.isNativePlatform?.()){$('connectDriveBtn').disabled=true;$('driveConnectStatus').textContent='Google sign-in is supported in the secure browser version, not inside this Android app. Use the web app in Chrome for Drive accounts.';$('connectDriveBtn').title='Open the HTTPS browser version to connect Google Drive.';}
 
-function assistantSpeak(text){if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=1;window.speechSynthesis.speak(u)}
+let samVoiceOn=localStorage.getItem('fia-sam-voice')!=='off';
+function syncSamVoiceButton(){const b=$('voiceToggle');if(!b)return;const supported='speechSynthesis'in window;b.disabled=!supported;b.textContent=supported?(samVoiceOn?'🔊 Voice on':'🔇 Voice off'):'Voice unavailable';b.setAttribute('aria-pressed',String(samVoiceOn))}
+function assistantSpeak(text){if(!('speechSynthesis'in window)||!samVoiceOn)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-NZ';u.rate=.98;u.pitch=1.08;window.speechSynthesis.speak(u)}
+$('voiceToggle').addEventListener('click',()=>{samVoiceOn=!samVoiceOn;localStorage.setItem('fia-sam-voice',samVoiceOn?'on':'off');if(!samVoiceOn&&'speechSynthesis'in window)window.speechSynthesis.cancel();syncSamVoiceButton();samChime(samVoiceOn?'success':'tap');if(samVoiceOn)assistantSpeak('Voice is on. I’m ready when you are.');});
+syncSamVoiceButton();
 function assistantSearch(raw){const q=(raw||'').trim().toLowerCase();const box=$('assistantResults'),status=$('assistantStatus');if(!q){status.textContent='Tell me what you want to find, for example “photos of tennis shoes”.';return}
 const terms=q.replace(/^(hey\s+sam[,.! ]*)/,'').replace(/^(sam[,.! ]*)/,'').replace(/^(can you |could you |please |find |show me |show |look for |search for |where are |do we have |have we got )/,'').split(/\s+/).filter(w=>w.length>1&&!['pictures','picture','photos','photo','images','image','files','file','the','for','with','any','got','have','some','of','and','in','on','at','to','is','it','my','we','are','do','does','please','can','you'].includes(w));
 const source=assistantFiles.length?assistantFiles:driveFiles;const all=[];const seen=new Set();
@@ -222,6 +254,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("button");if(b&&!
  });
  observer.observe(results,{childList:true,subtree:true});
  form.addEventListener('submit',()=>{
+   const character=document.querySelector('.sam-flight');if(character){character.classList.remove('sam-flying');void character.offsetWidth;character.classList.add('sam-flying');setTimeout(()=>character.classList.remove('sam-flying'),850)}
    if(status){status.className='notice sam-voice';status.textContent='Sam is on it. Let me rummage through the library…';}
    samChime('whoosh');
  },true);
