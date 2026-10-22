@@ -54,13 +54,39 @@ button.primary,.askrow button.primary{background:linear-gradient(110deg,#9fffe5,
 .portal{animation:corePulse 3s ease-in-out infinite,samFloat 4s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.portal{animation:none!important}button{transition:none}}
 
+
+/* Sam's library theatre: brushed-metal shutters, controlled swishes, crisp reveals */
+.sam-stage{position:relative;isolation:isolate;overflow:hidden}
+.sam-stage:before,.sam-stage:after{content:"";position:absolute;z-index:3;top:0;bottom:0;width:0;pointer-events:none;opacity:0}
+.sam-stage:before{left:0;background:linear-gradient(115deg,#172333 0%,#8c9ba9 9%,#34475b 18%,#101a29 46%,#718497 62%,#202f40 100%);border-right:1px solid #aebdca;box-shadow:12px 0 26px #02071199}
+.sam-stage:after{right:0;background:linear-gradient(245deg,#172333 0%,#8c9ba9 9%,#34475b 18%,#101a29 46%,#718497 62%,#202f40 100%);border-left:1px solid #aebdca;box-shadow:-12px 0 26px #02071199}
+.sam-stage.sam-reveal:before{animation:samLeftShutter .82s cubic-bezier(.18,.78,.18,1) both}
+.sam-stage.sam-reveal:after{animation:samRightShutter .82s cubic-bezier(.18,.78,.18,1) both}
+@keyframes samLeftShutter{0%{width:51%;opacity:1;transform:translateX(0)}62%{width:51%;opacity:1}100%{width:0;opacity:0;transform:translateX(-12px)}}
+@keyframes samRightShutter{0%{width:51%;opacity:1;transform:translateX(0)}62%{width:51%;opacity:1}100%{width:0;opacity:0;transform:translateX(12px)}}
+.sam-stage.sam-reveal .item,.sam-stage.sam-reveal .empty{animation:samPaperArrive .62s .25s cubic-bezier(.2,.8,.2,1) both}
+@keyframes samPaperArrive{0%{opacity:0;transform:translateY(14px) rotate(-.7deg);filter:blur(2px)}100%{opacity:1;transform:translateY(0) rotate(0);filter:blur(0)}}
+.sam-voice{display:inline-flex;align-items:center;gap:8px;color:#dbe9f8;font-weight:650;letter-spacing:.01em}
+.sam-voice:before{content:"";width:7px;height:7px;border-radius:50%;background:#70e5ce;box-shadow:0 0 12px #70e5ce;animation:samPulse 1.8s ease-in-out infinite}
+@keyframes samPulse{50%{opacity:.42;transform:scale(.78)}}
+.brand .logo{background:linear-gradient(145deg,#c4d0db,#4b637c 48%,#19283b);border:1px solid #a3b5c8;box-shadow:inset 0 1px #ffffff66,0 5px 18px #0005}
+button{transition:transform .18s ease,border-color .18s ease,filter .18s ease,box-shadow .18s ease}
+button:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 5px 16px #02071155}
+button:active{transform:translateY(1px) scale(.99)}
+.panel,.hero{border-color:#34465c;box-shadow:inset 0 1px #ffffff08,0 12px 34px #02071125}
+.hero h2{letter-spacing:-.035em}
+#assistantResults.sam-stage{border-radius:14px;min-height:72px}
+#assistantResults .item{position:relative;border-left:2px solid #8199b4;padding-left:12px}
+#assistantResults a.pill{background:linear-gradient(135deg,#354c66,#1a2a40);border-color:#8297ad}
+@media(prefers-reduced-motion:reduce){.sam-stage.sam-reveal:before,.sam-stage.sam-reveal:after,.sam-stage.sam-reveal .item,.sam-stage.sam-reveal .empty,.sam-voice:before{animation:none!important}button{transition:none}}
+
 </style></head><body><main class="wrap">
 <header class="top"><div class="brand"><div class="logo">⌘</div><div><div class="eyebrow">Personal file operations</div><h1>File Intelligence Agent</h1></div></div><span class="tag">Approval-first · Local processing</span></header>
 <section class="hero librarian">
 <div class="portal" aria-hidden="true"><span>✦</span><i></i></div>
-<div class="eyebrow">Your personal file librarian</div>
-<h2>Hi. What are we looking for?</h2>
-<p>Ask for a photo, document, product, or business file. I’ll search the connected libraries and show you the matches.</p>
+<div class="eyebrow">SAM · YOUR FILE LIBRARIAN</div>
+<h2>Give me a mission.</h2>
+<p>Ask for a file. I’ll sweep the library, pull the right records, and bring the best matches straight to you.</p>
 <form id="askForm" class="askrow"><input id="askInput" class="field" autocomplete="off" placeholder="Try: photos of tennis shoes" aria-label="Ask your file librarian"><button class="primary" type="submit">Find files</button><button id="speakBtn" type="button" aria-label="Speak your request">🎙 Speak</button></form>
 <div id="assistantStatus" class="notice">Connect and scan your Google Drives to build your searchable library.</div>
 <div id="assistantResults" class="list"><div class="empty">Your matching files will appear here.</div></div>
@@ -86,7 +112,7 @@ button.primary,.askrow button.primary{background:linear-gradient(110deg,#9fffe5,
 <div id="onboardShade" class="onboard-shade hidden" role="dialog" aria-modal="true" aria-labelledby="onboardTitle">
  <section class="onboard-card">
   <div class="eyebrow">Sam · your file-finding sidekick</div>
-  <h2 id="onboardTitle">Let’s get your universe connected ✨</h2>
+  <h2 id="onboardTitle">Let’s get your library connected</h2>
   <p>Pick how many Google accounts you want Sam to search. One at a time, with Google handling sign-in securely.</p>
   <div class="onboard-step"><b>1</b><strong>How many Google accounts do you want to connect?</strong></div>
   <select id="onboardCount" class="field" aria-label="Number of Google accounts to connect">
@@ -96,7 +122,7 @@ button.primary,.askrow button.primary{background:linear-gradient(110deg,#9fffe5,
   <p class="onboard-small">Your password stays with Google. Sam never needs to see it.</p>
   <label for="onboardClientId" class="hidden">Connection setup</label><input id="onboardClientId" class="field hidden" aria-hidden="true" tabindex="-1" autocomplete="off">
   <div id="onboardStatus" class="notice">0 accounts connected. Choose how many you want, then connect the first account.</div>
-  <div class="row onboard-actions"><button id="onboardConnect" class="primary" type="button">✨ Connect Google account</button><button id="onboardFinish" type="button">Not now</button></div>
+  <div class="row onboard-actions"><button id="onboardConnect" class="primary" type="button">Connect Google account</button><button id="onboardFinish" type="button">Not now</button></div>
   <p class="onboard-small">You can return to this setup any time from “Open library settings”. Connecting grants access only through Google’s consent screen. You can disconnect accounts in the app.</p>
  </section>
 </div>
@@ -175,5 +201,30 @@ if(!localStorage.getItem('fia-onboarding-seen'))openOnboarding();
 let samAudio;
 function samChime(kind="tap"){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;samAudio=samAudio||new C();if(samAudio.state==="suspended")samAudio.resume();const now=samAudio.currentTime;const o=samAudio.createOscillator(),g=samAudio.createGain();o.connect(g);g.connect(samAudio.destination);o.type="sine";o.frequency.setValueAtTime(kind==="success"?660:kind==="whoosh"?280:520,now);o.frequency.exponentialRampToValueAtTime(kind==="success"?990:kind==="whoosh"?120:720,now+.12);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.045,now+.018);g.gain.exponentialRampToValueAtTime(.0001,now+.19);o.start(now);o.stop(now+.2)}catch{}}
 document.addEventListener("click",e=>{const b=e.target.closest("button");if(b&&!b.disabled){samChime(b.id==="onboardConnect"||b.id==="connectDriveBtn"?"success":b.id==="libraryToggle"?"whoosh":"tap")}},true);
+
+
+/* Sam's reveal cue: shutters close, then slide away to present the found files. */
+(function samLibraryReveal(){
+ const results=document.getElementById('assistantResults');
+ const form=document.getElementById('askForm');
+ const status=document.getElementById('assistantStatus');
+ if(!results||!form)return;
+ results.classList.add('sam-stage');
+ const originalSubmit=form.querySelector('button[type="submit"]');
+ if(originalSubmit)originalSubmit.textContent='⌁ Find files';
+ let revealTimer;
+ const observer=new MutationObserver(()=>{
+   results.classList.remove('sam-reveal');
+   void results.offsetWidth;
+   results.classList.add('sam-reveal');
+   clearTimeout(revealTimer);
+   revealTimer=setTimeout(()=>results.classList.remove('sam-reveal'),1050);
+ });
+ observer.observe(results,{childList:true,subtree:true});
+ form.addEventListener('submit',()=>{
+   if(status){status.className='notice sam-voice';status.textContent='Sam is on it. Let me rummage through the library…';}
+   samChime('whoosh');
+ },true);
+})();
 
 </script></body></html>
