@@ -60,3 +60,26 @@ Terilliom apps should feel like intuitive, capable coworkers, not complicated so
 - Design for trust: never pretend work is complete when it is not, and make it easy to inspect what an agent changed.
 
 This is a design standard for future implementation, not a claim that every item is already implemented in this app.
+
+
+## Sam character and interaction design
+
+Sam is a formally dressed, cute adult-coded character with a polished, professional presentation: crisp white shirt, tailored waistcoat, expressive face, and a small hovercraft that carries him through the file library. He is not a children's mascot. His personality is precise, composed, and occasionally dry or cheeky.
+
+- Sam stays to the side during ordinary use so files and results remain the focus.
+- On arrival or when presenting search results, he glides in with a brief, configurable swish; when leaving, he glides away with a matching soft sound. Use restrained hover, paper-flutter, and mechanical sounds, with mute and reduced-motion controls.
+- During long jobs, show him visibly working: navigating file stacks, pulling papers into a cyclone, sorting them into orderly groups, and returning with results. Keep progress truthful and don't fake completed work.
+- Sam can communicate through short on-screen messages and, where supported and enabled, spoken narration and two-way microphone interaction. Voice controls must be explicit and optional.
+- The character should feel enjoyable to adults: polished animation, expressive movement, subtle humour, and no childish interface clutter.
+
+## File understanding and intelligence requirements
+
+Sam must go beyond sorting by filename. The target workflow is to build a searchable understanding of the user's authorised library:
+
+- **Images:** generate descriptive captions and searchable visual tags; recognise specific objects or characters only when the model has sufficient confidence, and flag uncertain identifications for review.
+- **Documents:** extract available text from supported formats, create a concise topic summary, and derive useful search terms and suggested filenames. Support should be added deliberately for PDF, DOCX, XLSX/CSV, and plain text, with clear messages for scanned documents that require OCR.
+- **Organisation:** propose meaningful folder locations and filenames using content, metadata, and user rules; show a reviewable plan before making changes.
+- **Large libraries:** scan in batches, retain a resumable index, report progress, detect duplicates, and let users search previously indexed content without rescanning everything.
+- **Accuracy and privacy:** clearly distinguish observed facts from guesses, show confidence or uncertainty where useful, respect account permissions, and never silently delete files.
+
+These are implementation requirements and planned capabilities. Existing project limitations still apply until each format, recognition path, and large-library workflow is implemented and tested.
