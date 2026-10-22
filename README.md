@@ -25,5 +25,5 @@ Open Actions, select Build Android APK, open a successful run and download the f
 The project does not have unrestricted access to the entire Android phone. Drive search uses filenames, metadata and generated captions for images you choose to analyse. The image-caption model can describe a broad scene or object but may not recognise specific collectible brands or characters. It processes up to 10 images per click; run it again for the next batch. The app does not yet read every PDF, spreadsheet, or document's contents. Google OAuth configuration is required and cannot be bypassed.
 
 
-## Live web app
-The GitHub Pages deployment workflow publishes the app at `https://lucasmaxxinfo-sketch.github.io/gofog0/` when the repository's Pages deployment is enabled. The HTTPS browser version is the intended way to connect Google Drive. The Android APK is a local companion and does not support Google OAuth inside its embedded WebView.
+## Web and Android
+The repository can build a web package and Android debug APK automatically. Publishing a live HTTPS site requires GitHub Pages to be enabled in repository settings, which this automation connection cannot change. The Android APK is a local companion and does not support Google OAuth inside its embedded WebView; connect Drive through the HTTPS browser version after hosting is enabled.
