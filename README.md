@@ -22,7 +22,7 @@ Sam's core product is a privacy-first file librarian, not a general-purpose pers
 - **Paid — Personal Librarian:** higher processing and search allowances, more frequent organisation, larger recognition batches, and longer-running tasks.
 - **Higher tier — Autonomous Assistant:** scheduled and multi-step library maintenance, progress updates, and completion reports.
 
-All tiers retain privacy controls, transparent permissions, and approval before file moves or renames. The app must never delete files without explicit approval. No prices or usage quotas have been decided, and subscription enforcement/payment processing is not implemented yet. Do not display these tiers as purchasable until those systems and the actual limits are built and tested.
+All tiers retain privacy controls, transparent permissions, and approval before file moves or renames. The app must never delete files without explicit approval. Target entry-level paid pricing is approximately **NZ$1–NZ$2**, keeping the ecosystem broadly accessible. Final prices, usage quotas, and subscription enforcement/payment processing are not implemented yet. Do not display these tiers as purchasable until those systems and the actual limits are built and tested.
 
 The free/open-source build should prefer on-device or browser-side processing where practical. Any hosted model, background worker, storage, or billing service must be assessed for ongoing costs before being included in a paid tier.
 
@@ -40,3 +40,8 @@ The project does not have unrestricted access to the entire Android phone. Drive
 
 ## Web and Android
 The repository can build a web package and Android debug APK automatically. Publishing a live HTTPS site requires GitHub Pages to be enabled in repository settings, which this automation connection cannot change. The Android APK is a local companion and does not support Google OAuth inside its embedded WebView; connect Drive through the HTTPS browser version after hosting is enabled.
+
+
+## Terilliom ecosystem principle
+
+Sam is one specialist agent within a wider Terilliom ecosystem. Agents should do useful work in the background, coordinate through clear hand-offs when appropriate, and show users outcomes, exceptions, and decisions that need their attention rather than making them manage the machinery. Each app can have its own distinctive, age-appropriate personality and visual identity while retaining consistent privacy, permission, and safety standards. Prefer free/open-source components and low operating costs so entry-level products can remain affordable. These are product principles, not claims that cross-agent coordination is implemented in this repository.
