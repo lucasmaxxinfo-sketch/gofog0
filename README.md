@@ -13,6 +13,19 @@ Approval-first file organiser. Free and open source.
 - Download CSV plans and activity logs.
 - GitHub Actions can build an Android debug APK.
 
+
+## Product tiers (planned; not yet enforced in the app)
+
+Sam's core product is a privacy-first file librarian, not a general-purpose personal assistant.
+
+- **Free — Librarian:** up to two Google Drive accounts; file/image recognition, organisation suggestions, and search. Usage is limited by a clear allowance for processed files and searches, not by deliberately making existing files hard to find.
+- **Paid — Personal Librarian:** higher processing and search allowances, more frequent organisation, larger recognition batches, and longer-running tasks.
+- **Higher tier — Autonomous Assistant:** scheduled and multi-step library maintenance, progress updates, and completion reports.
+
+All tiers retain privacy controls, transparent permissions, and approval before file moves or renames. The app must never delete files without explicit approval. No prices or usage quotas have been decided, and subscription enforcement/payment processing is not implemented yet. Do not display these tiers as purchasable until those systems and the actual limits are built and tested.
+
+The free/open-source build should prefer on-device or browser-side processing where practical. Any hosted model, background worker, storage, or billing service must be assessed for ongoing costs before being included in a paid tier.
+
 ## Google Drive setup
 Create a project in Google Cloud Console, enable Google Drive API, configure the OAuth consent screen, and create a Web application OAuth Client ID. Add the app's exact HTTPS origin to Authorised JavaScript origins. Paste that Client ID into the app and connect accounts individually. Never enter a Google password or client secret into the app. Google may display an unverified-app warning until the OAuth project is configured and verified.
 
