@@ -90,7 +90,7 @@ if(window.Capacitor?.isNativePlatform?.()){$('connectDriveBtn').disabled=true;$(
 
 function assistantSpeak(text){if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=1;window.speechSynthesis.speak(u)}
 function assistantSearch(raw){const q=(raw||'').trim().toLowerCase();const box=$('assistantResults'),status=$('assistantStatus');if(!q){status.textContent='Tell me what you want to find, for example “photos of tennis shoes”.';return}
-const terms=q.replace(/^(hey\\s+sam[,.! ]*)/,'').replace(/^(sam[,.! ]*)/,'').replace(/^(can you |could you |please |find |show me |show |look for |search for |where are |do we have |have we got )/,'').split(/\\s+/).filter(w=>w.length>1&&!['pictures','picture','photos','photo','images','image','files','file','the','for','with','any','got','have','some'].includes(w));
+const terms=q.replace(/^(hey\s+sam[,.! ]*)/,'').replace(/^(sam[,.! ]*)/,'').replace(/^(can you |could you |please |find |show me |show |look for |search for |where are |do we have |have we got )/,'').split(/\s+/).filter(w=>w.length>1&&!['pictures','picture','photos','photo','images','image','files','file','the','for','with','any','got','have','some'].includes(w));
 const source=assistantFiles.length?assistantFiles:driveFiles;const all=[];const seen=new Set();
 for(const f of source){const hay=[f.name,f.suggestedName,f.caption,f.description,f.mimeType,driveKind(f),f._accountEmail].join(' ').toLowerCase();const score=terms.reduce((n,t)=>n+(hay.includes(t)?1:0),0);const key=(f._accountKey||'')+':'+f.id;if(score>0&&!seen.has(key)){seen.add(key);all.push({f,score})}}
 all.sort((a,b)=>b.score-a.score||(a.f.name||'').localeCompare(b.f.name||''));
