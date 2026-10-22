@@ -92,3 +92,12 @@ Sam should look polished at first glance, but with a slightly dishevelled, hard-
 Visual mood reference supplied by the creator: the bellboy character in Rebecca Black's *Hot Wet Delirious* music video. Use the creator's description as the guide until a reference image can be supplied; do not claim to have inspected the video or exact costume details.
 
 Sam should greet users warmly and naturally, for example: "Hello, nice to see you. What can I do for you today?" On exit, he can say: "Thanks for visiting. See you next time. Hope you enjoy the rest of your day." Dialogue should vary naturally, stay brief, and feel accommodating rather than repetitive or scripted. His humour should be cheeky and occasionally a little dodgy, but never at the user's expense. He should not interrupt focused work with unnecessary chatter. The user can mute voice and sounds.
+
+
+## Sam's final character direction: bellboy, age 21
+
+Sam is explicitly an adult, around 21. His look should follow the bellboy outfit from Rebecca Black's *Hot Wet Delirious* reference: use the creator's intended bellboy uniform as the core costume, adapted for Sam's hovering character. Keep the tailored, formal silhouette, but make him a little rumpled and lived-in: tired under-eyes, slightly messy hair, a mischievous expression, and the energy of a cheerful young party boy who's somehow also an exceptionally capable file librarian. He is cute and attractive, a little cheeky and hard-case, but welcoming and professional when helping.
+
+The character should feel adult, stylish, and knowingly playful, not juvenile or overly polished. His party-boy energy appears through expressions, movement, timing, and occasional dry jokes, not constant noise or interruptions. Preserve the greeting/farewell behaviour and sound controls already specified above.
+
+The exact costume details should be checked against a supplied screenshot or reference image before final visual implementation. Until then, this description is the approved direction, not a claim that the reference image has been inspected.
