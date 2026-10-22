@@ -1,0 +1,15 @@
+const fs = require("node:fs");
+const html = fs.readFileSync("index.html", "utf8");
+const parts = html.split("<script>");
+if (parts.length < 2 || !parts[1].includes("</script>")) throw new Error("Inline application script is missing");
+const source = parts[1].split("</script>")[0];
+new Function(source);
+const ids = [...html.matchAll(new RegExp('id="([^"]+)"', "g"))].map(m => m[1]);
+const duplicates = ids.filter((id, i) => ids.indexOf(id) !== i);
+if (duplicates.length) throw new Error("Duplicate HTML IDs: " + [...new Set(duplicates)].join(", "));
+for (const id of ["askForm", "askInput", "drivePanel", "driveAccount", "identifyDriveImagesBtn", "fileInput"]) if (!ids.includes(id)) throw new Error("Required control missing: " + id);
+if (/method\s*:\s*['"]DELETE['"]/.test(source)) throw new Error("Direct DELETE request detected");
+console.log("PASS: JavaScript syntax");
+console.log("PASS: " + ids.length + " unique HTML IDs");
+console.log("PASS: required librarian, Drive, image-identification and local-file controls");
+console.log("PASS: no direct DELETE request in app script");
