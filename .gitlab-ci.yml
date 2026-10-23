@@ -1,0 +1,24 @@
+stages:
+  - test
+  - deploy
+
+validate_app:
+  stage: test
+  image: node:22-alpine
+  script:
+    - node scripts/check-html.cjs
+
+pages:
+  stage: deploy
+  image: alpine:3.22
+  script:
+    - mkdir -p public
+    - cp index.html public/index.html
+    - cp manifest.webmanifest public/manifest.webmanifest
+    - cp service-worker.js public/service-worker.js 2>/dev/null || true
+    - cp favicon.svg public/favicon.svg 2>/dev/null || true
+    - test -s public/index.html
+  pages:
+    publish: public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
