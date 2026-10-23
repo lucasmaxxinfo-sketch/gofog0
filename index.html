@@ -153,6 +153,30 @@ button:hover{border-color:#c08b79;filter:brightness(1.08)}
 .tag,.pill{border-color:#65434a;background:#302329;color:#e9d3c6}
 @media(max-width:700px){.wrap{padding:10px 12px 30px}.hero.librarian{display:flex;text-align:center;align-items:stretch;padding:24px 17px;gap:0}.librarian .sam-flight{height:180px;max-width:180px;margin:0 auto 8px}.librarian p{margin:0 auto 18px}.librarian-actions{justify-content:center}.librarian>.eyebrow{align-self:auto}.askrow{flex-wrap:wrap}.askrow .field{flex-basis:100%}.askrow button{flex:1}#assistantResults{max-height:30vh}}
 @media(prefers-reduced-motion:reduce){.sam-bot,.paper-orbit,.flight-ring-b,.bot-glint{animation:none!important}}
+
+/* Final usability pass: clear focus, calmer motion, resilient mobile layout */
+:focus-visible{outline:3px solid #a9fff0;outline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{box-shadow:0 0 0 4px #a9fff033}
+input,select{max-width:100%}
+button{min-height:42px}
+.item a{overflow-wrap:anywhere}
+.notice{line-height:1.45}
+.librarian-actions{display:flex;flex-wrap:wrap;gap:10px}
+.librarian-actions button{min-height:44px}
+#assistantResults:empty{display:none}
+#assistantStatus[aria-live],#visionStatus[aria-live],#driveResult[aria-live]{overflow-wrap:anywhere}
+.sam-flight{flex-shrink:0}
+@media(max-width:380px){
+ .brand .logo{width:38px;height:38px}
+ .brand h1{font-size:16px}
+ .librarian h2{font-size:25px}
+ .sam-flight{transform:scale(.88);margin-top:-8px;margin-bottom:0}
+ .onboard-card{padding:18px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style></head><body><main class="wrap">
 <header class="top"><div class="brand"><div class="logo">⌘</div><div><div class="eyebrow">Personal file operations</div><h1>File Intelligence Agent</h1></div></div><span class="tag">Approval-first · Local processing</span></header>
 <section class="hero librarian">
